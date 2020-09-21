@@ -1,15 +1,25 @@
 import React from "react";
-import { Counter } from "./features/counter/Counter";
-import "./App.css";
+import styled from "styled-components";
 
-function App() {
+import { SearchForm, CardList } from "./components";
+
+export const Container = styled.div({
+  textAlign: "center",
+  minHeight: "100vh",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  fontSize: "calc(10px + 2vmin)",
+});
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <Counter />
-      </header>
-    </div>
+    <Container>
+      <SearchForm />
+      <CardList />
+    </Container>
   );
-}
+};
 
 export default App;
