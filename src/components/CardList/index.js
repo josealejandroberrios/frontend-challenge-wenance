@@ -2,22 +2,21 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { isEmpty } from "lodash";
 
-import {
-  Wrapper,
-  LoadingIndicator,
-  ErrorMessage,
-  EmptyMessage,
-} from "./styled";
+import { Wrapper, LoadingIndicator } from "./styled";
 import Card from "../Card";
+import InfoMessage from "../InfoMessage";
+
 import { selectPeople } from "../../features/people/peopleSlice";
+import { selectSearch } from "../../features/search/searchSlice";
 
 const CardList = () => {
   const { list, isLoading, error, completeFetch } = useSelector(selectPeople);
+  const { previous: search } = useSelector(selectSearch);
 
   if (isLoading) {
     return (
       <Wrapper>
-        <LoadingIndicator>Loading...</LoadingIndicator>
+        <LoadingIndicator />
       </Wrapper>
     );
   }
@@ -25,15 +24,21 @@ const CardList = () => {
   if (error) {
     return (
       <Wrapper>
-        <ErrorMessage>Error: {error}</ErrorMessage>
+        <InfoMessage content="An error has occurred, please try again" />
       </Wrapper>
     );
   }
 
   if (completeFetch && isEmpty(list)) {
+    const content = (
+      <>
+        No results found for search <b>"{search}"</b>
+      </>
+    );
+
     return (
       <Wrapper>
-        <EmptyMessage>No se encontraron resultados</EmptyMessage>
+        <InfoMessage content={content} />
       </Wrapper>
     );
   }
